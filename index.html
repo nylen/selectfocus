@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.selectfocus.js"></script>
+    <script type="text/javascript">
+      function pad(n, l) {
+        var s = Array(l+1).join('0') + n;
+        return s.substring(s.length - l);
+      }
+
+      function log(o, e) {
+        if(!$('#enable-log').is(':checked')) {
+          return;
+        }
+        var d = new Date();
+        $('#log-table').append('<tr class="event"><td>' + [
+          o.value,
+          d.getHours() + ':' +
+            pad(d.getMinutes(), 2) + ':' +
+            pad(d.getSeconds(), 2) + '.' +
+            pad(d.getMilliseconds(), 3),
+          e,
+          o.selectionStart + '-' + o.selectionEnd
+        ].join('</td><td>') + '</td></tr>');
+      }
+
+      $(function() {
+        $('#demo1 :text').selectfocus();
+        $('#demo2 :text').selectfocus({live: true});
+
+        $('.demo-bind').click(function() {
+          var id = $(this).closest('.demo').attr('id');
+          $('#' + id + ' :text').selectfocus({
+            live: (id == 'demo2')
+          });
+        });
+
+        $('.demo-unbind').click(function() {
+          var id = $(this).closest('.demo').attr('id');
+          $('#' + id + ' :text').noselectfocus();
+        });
+
+        $('.demo-add').click(function() {
+          $(this).closest('.demo').append(
+            '<div class="textbox"><input type="text" value="' + Math.random() + '" /></div>');
+        });
+
+        $('.demo-remove').click(function() {
+          $(this).closest('.demo').find('.textbox').last().remove();
+        });
+
+        var events = 'focus click mousedown mouseup blur'.split(' ');
+        $.each(events, function(i) {
+          var e = events[i];
+          $(':text').live(e, function() {
+            log(this, e);
+          });
+        });
+
+        $('#clear-log').click(function() {
+          $('#log-table tr.event').remove();
+        });
+      });
+    </script>
+    <style type="text/css">
+      div.text {
+        margin-bottom: 1em;
+        max-width: 850px;
+      }
+      h2 {
+        margin: 1em 0;
+      }
+      td {
+        padding-right: 5px;
+      }
+      code {
+        background: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SelectFocus jQuery plugin</h1>
+    <div class="text">
+      This jQuery plugin sets a textbox up to select all its text when it is
+      focused, working around a couple of browser bugs in the process.  See the
+      plugin code for more details.  The plugin supports regular events using
+      <code>.bind()</code> (the default behavior), or live events using
+      <code>.live()</code>.
+    </div>
+
+    <div class="text">
+      <a href="jquery.selectfocus.js">Click here to download the plugin.</a>
+    </div>
+
+    <h2>Demo 1 - normal operation using regular events</h2>
+    <div class="demo" id="demo1">
+      <div class="text">
+        <table>
+          <tr>
+            <td>Code to enable plugin:</td>
+            <td><code>$('#demo1 :text').selectfocus();</code></td>
+          </tr>
+          <tr>
+            <td>Code to disable plugin:</td>
+            <td><code>$('#demo1 :text').noselectfocus();</code></td>
+          </tr>
+        </table>
+      </div>
+      <input type="button" value="bind" class="demo-bind" />
+      <input type="button" value="unbind" class="demo-unbind" />
+      <input type="button" value="add textbox" class="demo-add" />
+      <input type="button" value="remove textbox" class="demo-remove" />
+      <div class="textbox">
+        <input type="text" value="asdfasdf testing" />
+      </div>
+      <div class="textbox">
+        <input type="text" value="asdfasdf testing2" />
+      </div>
+      <div class="textbox">
+        <input type="text" value="asdfasdf testing3" />
+      </div>
+    </div>
+
+    <h2>Demo 2 - using live events</h2>
+    <div class="demo" id="demo2" data-count="3">
+      <div class="text">
+        <table>
+          <tr>
+            <td>Code to enable plugin:</td>
+            <td><code>$('#demo2 :text').selectfocus({live: true});</code></td>
+          </tr>
+          <tr>
+            <td>Code to disable plugin:</td>
+            <td><code>$('#demo2 :text').noselectfocus();</code></td>
+          </tr>
+        </table>
+      </div>
+      <div class="text">
+        Note that the usual limitations of <code>.live()</code> and
+        <code>.die()</code> apply here - the same selector must be used for any
+        calls to <code>.noselectfocus()</code>, and plugin calls should
+        probably appear right after a <code>$('some selector')</code> call (not
+        at the end of a chain of filter functions).
+      </div>
+      <input type="button" value="bind" class="demo-bind" />
+      <input type="button" value="unbind" class="demo-unbind" />
+      <input type="button" value="add textbox" class="demo-add" />
+      <input type="button" value="remove textbox" class="demo-remove" />
+      <div class="textbox">
+        <input type="text" value="testing demo2" />
+      </div>
+      <div class="textbox">
+        <input type="text" value="testing demo2-2" />
+      </div>
+      <div class="textbox">
+        <input type="text" value="testing demo2-3" />
+      </div>
+    </div>
+
+    <h2>Event log</h2>
+    <div id="log">
+      <input type="button" value="clear" id="clear-log" />
+      <input type="checkbox" id="enable-log" />
+      <label for="enable-log">enable</label>
+      <table id="log-table">
+        <tr class="header">
+          <th>Textbox value</th>
+          <th>Event time</th>
+          <th>Event</th>
+          <th>Selection</th>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
