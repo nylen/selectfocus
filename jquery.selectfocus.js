@@ -50,7 +50,7 @@
     },
 
     mouseup: function(e) {
-      if($(this).data(dataKey) == 'focus') {
+      if ($(this).data(dataKey) == 'focus') {
         e.preventDefault();
       }
 
@@ -59,7 +59,7 @@
     },
 
     click: function() {
-      if($(this).data(dataKey) == 'mouseup') {
+      if ($(this).data(dataKey) == 'mouseup') {
         this.select();
       }
 
