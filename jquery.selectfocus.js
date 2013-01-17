@@ -1,6 +1,6 @@
 /* SelectFocus jQuery plugin
  *
- * Copyright (C) 2011 James Nylen
+ * Copyright (C) 2011-2012 James Nylen
  *
  * Released under MIT license
  * For details see:
