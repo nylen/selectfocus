@@ -13,7 +13,7 @@
   "dependencies": {
     "jquery": ">=1.5 <1.9"
   },
-  "description": "jQuery plugin to select all test in a textbox when it is focused",
+  "description": "jQuery plugin to select all text in a textbox when it is focused",
   "keywords": [
     "textbox", "select", "focus", "select-all", "click"
   ],
