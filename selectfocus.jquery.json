@@ -1,0 +1,24 @@
+{
+  "name": "selectfocus",
+  "version": "0.1.0",
+  "title": "SelectFocus",
+  "author": {
+    "name": "James Nylen",
+    "email": "jnylen@gmail.com"
+  },
+  "licenses": [{
+    "type": "MIT",
+    "url": "https://github.com/nylen/selectfocus/blob/gh-pages/LICENSE.txt"
+  }],
+  "dependencies": {
+    "jquery": ">=1.5 <1.9"
+  },
+  "description": "jQuery plugin to select all test in a textbox when it is focused",
+  "keywords": [
+    "textbox", "select", "focus", "select-all", "click"
+  ],
+  "homepage": "http://nylen.github.com/selectfocus/",
+  "docs": "http://nylen.github.com/selectfocus/",
+  "demo": "http://nylen.github.com/selectfocus/",
+  "bugs": "https://github.com/nylen/selectfocus/issues"
+}
